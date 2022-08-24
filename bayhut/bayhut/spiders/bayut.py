@@ -1,3 +1,4 @@
+from gc import callbacks
 import scrapy
 class BayutSpider(scrapy.Spider):
     name ='bayut'
@@ -12,5 +13,16 @@ class BayutSpider(scrapy.Spider):
                 'link':products.css('a._287661cb').attrib['href'] ,
                 
             }
+        
+        
+        
+        next_page =  response.css('a.b7880daf').attrib['href']
+        if next_page is not  None:
+            yield response.follow(next_page, callback=self.parse)
+        
+            
+    
+            
+    
         
 
