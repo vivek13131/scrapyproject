@@ -20,9 +20,10 @@ class BayutSpider(scrapy.Spider):
         
         
         
-        #  next_page =  response.css('a.b7880daf').attrib['href']
+        # next_page =  response.css('a.b7880daf').attrib['href']
         # if next_page is not  None:
         #     yield response.follow(next_page, callback=self.parse)
+        #1
         for next_page in response.css('a.b7880daf'):
             yield response.follow(next_page, self.parse)
         
