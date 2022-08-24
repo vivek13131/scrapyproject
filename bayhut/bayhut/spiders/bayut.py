@@ -3,7 +3,7 @@ import scrapy
 class BayutSpider(scrapy.Spider):
     name ='bayut'
     start_urls =['https://www.bayut.com/to-rent/property/dubai/']
-    base_url =['https://www.bayut.com/']
+    base_url =['https://www.bayut.com/to-rent/property/dubai/']
     
     def parse(self, response,):
         for products in response.css('article.ca2f5674'):
@@ -20,9 +20,11 @@ class BayutSpider(scrapy.Spider):
         
         
         
-        next_page =  response.css('a.b7880daf').attrib['href']
-        if next_page is not  None:
-            yield response.follow(next_page, callback=self.parse)
+        #  next_page =  response.css('a.b7880daf').attrib['href']
+        # if next_page is not  None:
+        #     yield response.follow(next_page, callback=self.parse)
+        for next_page in response.css('a.b7880daf'):
+            yield response.follow(next_page, self.parse)
         
     
     
