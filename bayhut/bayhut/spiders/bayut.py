@@ -2,7 +2,7 @@ from gc import callbacks
 import scrapy
 class BayutSpider(scrapy.Spider):
     name ='bayut'
-    start_urls =['https://www.bayut.com/to-rent/property/dubai/']
+    start_urls =['https://www.bayut.com/property/details-5118159.html']
     base_url =['https://www.bayut.com/to-rent/property/dubai/']
     
     def parse(self, response,):
@@ -14,19 +14,18 @@ class BayutSpider(scrapy.Spider):
                 'link':products.css('a._287661cb').attrib['href'] ,
                 
             }
-        # next_page_partial_url = response.xpath('//li[@class="b7880daf"]/a/@href').extract_first()
-        # next_page_url =self.base_url + next_page_partial_url
-        # yield scrapy.Request(next_page_url, callback=self.parse)
-        
-        
-        
-        # next_page =  response.css('a.b7880daf').attrib['href']
-        # if next_page is not  None:
-        #     yield response.follow(next_page, callback=self.parse)
-        #1
+   
         for next_page in response.css('a.b7880daf'):
             yield response.follow(next_page, self.parse)
-        
+    
+    def parse(self, response,):
+          yield{
+              
+              'productit':response.xpath("//span[@class='_327a3afc']/text()")[4].extract(),
+                
+          }
+          
+             
     
     
         
