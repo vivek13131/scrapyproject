@@ -3,28 +3,11 @@ from gc import callbacks
 import scrapy
 class scrapy(scrapy.Spider):
     name ='prasing'
-    start_urls =[
-                 'https://www.bayut.com/property/details-5118159.html'
-                 
-                 ]
-    custom_settings = {'CLOSESPIDER_PAGECOUNT': 10}
-    
-    # def parse(self, response,):
-    #     for products in response.css('article.ca2f5674'):
-    #         yield{
-    #             'location':products.css('div._7afabd84::text').get(),
-    #             'price':products.css('span.f343d9ce::text').get(),
-    #             'type':products.css('div._9a4e3964::text').get() ,
-    #             'link':products.css('a._287661cb').attrib['href'] ,
-                
-    #         }
-   
-    #     for next_page in response.css('a.b7880daf'):
-    #         yield response.follow(next_page, self.parse)
+    start_urls =['https://www.bayut.com/property/details-5118159.html']
     
     def parse(self, response,):
           yield{
-              "Productid":response.xpath("//span[@class='_327a3afc']/text()")[4].extract(),
+            "Productid":response.xpath("//span[@class='_327a3afc']/text()")[4].extract(),
             "purpose":response.xpath("//span[@class='_812aa185']/text()")[1].extract(),
             "type":response.xpath("//span[@class='_812aa185']/text()")[0].extract(),
             "addon":response.xpath("//span[@class='_812aa185']/text()")[3].extract(),
@@ -38,11 +21,18 @@ class scrapy(scrapy.Spider):
                 {
                 "bedrooms":response.xpath("//span[@class='fc2d1086']/text()")[0].extract(),
                 "bathrooms":response.xpath("//span[@class='fc2d1086']/text()")[1].extract(),
-                "size":response.xpath("//span[@class='fc2d1086']//span/text()").extract() 
+                "size":response.xpath("//span[@class='fc2d1086']//span/text()").extract(),
+                 
                 
             },
-              
-                
+            "permit_number":response.xpath("//span[@class='ff863316']/text()")[4].extract(),
+            "agent_name":response.xpath("//span[@class='ff863316']/text()")[0].extract(),
+            "image_url":response.xpath("//img[@class='bea951ad']/@src").get(),
+            "brudcrumb":response.xpath("//span[@class='_327a3afc']/text()").extract(),
+            "amenities":[
+                response.xpath("//span[@class='_005a682a']/text()").extract(),
+            ],
+            "description": response.xpath("//span[@class='_2a806e1e']/text()").extract(),          
           }
           
              
