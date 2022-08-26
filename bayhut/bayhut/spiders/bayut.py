@@ -3,9 +3,11 @@ from gc import callbacks
 import scrapy
 class BayutSpider(scrapy.Spider):
     name ='bayut'
-    start_urls =['https://www.bayut.com/to-rent/property/dubai/']
-    base_url =['https://www.bayut.com/to-rent/property/dubai/']
-    custom_settings = {'CLOSESPIDER_PAGECOUNT': 100}
+    start_urls =[
+                 'https://www.bayut.com/to-rent/property/dubai/'
+                 
+                 ]
+    custom_settings = {'CLOSESPIDER_PAGECOUNT': 10}
     
     def parse(self, response,):
         for products in response.css('article.ca2f5674'):
@@ -20,12 +22,7 @@ class BayutSpider(scrapy.Spider):
         for next_page in response.css('a.b7880daf'):
             yield response.follow(next_page, self.parse)
     
-    # def parse(self, response,):
-    #       yield{
-              
-    #           'productit':response.xpath("//span[@class='_327a3afc']/text()")[4].extract(),
-                
-    #       }
+    
           
              
     
