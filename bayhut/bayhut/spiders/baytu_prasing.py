@@ -4,7 +4,7 @@ import scrapy
 class scrapy(scrapy.Spider):
     name ='prasing'
     start_urls =['https://www.bayut.com/property/details-5118159.html']
-    
+# in this function xpath is used for collecting data from website
     def parse(self, response,):
           yield{
             "Productid":response.xpath("//span[@class='_327a3afc']/text()")[4].extract(),
